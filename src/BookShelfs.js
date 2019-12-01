@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 //FUNCTIONAL COMPONENT: This is a functional component. Since it is a stateless component so, we don't need a class component here.
 const BookShelfs = ({books, selectHandler}) => {
     
-    //THUMBNAILS: this functiorn is for missing thumbnail, if a book does not have thumbnail by giving this condition we can prevent form errore.
+    //THUMBNAIL3213§    Q1: this functiorn is for missing thumbnail, if a book does not have thumbnail by giving this condition we can prevent form errore.
    const imgaCondintion = (book) => {
         if(book && book.imageLinks && book.imageLinks.thumbnail) {
             return (<div className="book-cover" style={{ width: 128, height: 193, backgroundImage:`url(${book.imageLinks.thumbnail})`}}></div>)
@@ -44,6 +44,7 @@ const BookShelfs = ({books, selectHandler}) => {
                                     </li>
                                 );
                             }
+                            return null;
                         })}
                     </ol>
                 </div>

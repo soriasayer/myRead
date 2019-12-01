@@ -4,21 +4,28 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import BookSearch from './BookSearch';
 import BookShelfs from './BookShelfs';
+import { debounce } from 'debounce';
 
 // APP: This is a parent component that contain the initial data and passing it to it's child via props.
 class BooksApp extends React.Component {
-  state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    books: [],
-    // STATE: This object is for initializing the search text which is mutable.
-    searchResult: []
-  }
 
+  constructor(props) {
+    super(props);
+    //DEBOUNCE: This function is controling the rate of executing searchQuery as it is not needed for every key stroke.
+    this.searchQuery = debounce(this.searchQuery, 300);
+    this.state = {
+      /**
+       * TODO: Instead of using this state variable to keep track of which page
+       * we're on, use the URL in the browser's address bar. This will ensure that
+       * users can use the browser's back and forward buttons to navigate between
+       * pages, as well as provide a good URL they can bookmark and share.
+       */
+      books: [],
+      // STATE: This object is for initializing the search text which is mutable.
+      searchResult: []
+    }
+  
+  }
 // API: this method is for calling get API nad updates our books state with passing it into setState.
   shelfBooks = () => {
     BooksAPI.getAll()
@@ -42,11 +49,10 @@ class BooksApp extends React.Component {
   selectHandler = (e, bookId) => {
     const {books} = this.state;
     books.map(book => {
-      let newBook = {...book}
-      if(newBook.id === bookId) {
-        newBook.shelf = e.target.value;
+      if(book.id === bookId) {
+        book.shelf = e.target.value;
       }
-      return newBook;
+      return book;
     })
     this.setState({books});
     const book = {
@@ -55,14 +61,19 @@ class BooksApp extends React.Component {
     this.updateShelf(book, e.target.value)
   }
 
-  // POST: This method send data to the sever from user imput and updates out searchResult state with setState.
+  // POST: This method send data to the sever from user input and updates our searchResult state with setState. Aditionally, the condition inside this method is for clearing Search results when all of the text is deleted out of the search input box.
   searchQuery = (query) => {
-    BooksAPI.search(query)
-    .then(result => {
-      Array.isArray(result)
-      ? this.setState({searchResult: result})
-      : this.setState({searchResult: []})
-    })
+    if(query.trim() !== "") {
+      BooksAPI.search(query)
+      .then(result => {
+        Array.isArray(result)
+        ? this.setState({searchResult: result})
+        : this.setState({searchResult: []})
+      })
+    } else {
+      this.setState({searchResult: []})
+    }
+      
   }
 
   // RENDER: This method renders the child components by possing thier data throgh props.

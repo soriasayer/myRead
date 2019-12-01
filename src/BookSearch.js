@@ -14,11 +14,6 @@ class BookSearch extends Component {
         this.props.searchQuery(e.target.value);
     }
 
-    //CLEAR SEARCH: This method clears Search results when all of the text is deleted out of the search input box.
-    clearQuery = () => {
-        this.props.searchQuery(" ");
-    }
-
     render() {
         const { query } = this.state;
 
@@ -52,7 +47,7 @@ class BookSearch extends Component {
                             */}
                             <input type="text" placeholder="Search by title or author"
                             value={query}
-                            onChange={query.length !== " " ? this.onInputChange : this.clearQuery}
+                            onChange={this.onInputChange}
                             />
                         </div>
                     </div>
