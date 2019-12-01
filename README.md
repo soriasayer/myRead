@@ -1,6 +1,6 @@
 # MyReads Project
 
-This application is for searching books along with it is title image and authors. This application has three shelves (Currently Readin, Want to Read and Read). Search results on the search page allow the user to select one of those shelves to place the book in a certain shelf and manage them properly. Additionally, the main page has the functionallity to move books between shelves
+This application is for searching books along with their titles, images and authors.This application has three shelves (Currently Readin, Want to Read and Read). Search results on the search page allow the user to select one of those shelves to place the book in a certain shelf and manage them properly. Additionally, the main page has the functionality to move books between shelves.
 
 
 ## Installation
